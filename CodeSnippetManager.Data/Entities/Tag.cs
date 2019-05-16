@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace CodeSnippetManager.DataAccess.Entities
@@ -14,8 +15,8 @@ namespace CodeSnippetManager.DataAccess.Entities
         public int Id { get; set; }
 
         [Required]
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
 
-        public ObservableCollection<Snippet> Snippets { get; set; }
+        public virtual ICollection<Snippet> Snippets { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using CodeSnippetManager.DataAccess.Entities;
 using CodeSnippetManager.UI.Data;
 using CodeSnippetManager.UI.Event;
+using CodeSnippetManager.UI.Wrapper;
 using Prism.Commands;
 using Prism.Events;
 using System;
@@ -16,7 +17,7 @@ namespace CodeSnippetManager.UI.ViewModels
     {
         private readonly ISnippetManagerDataService _snippetManagerDataService;
         private readonly IEventAggregator _eventAggregator;
-        private Snippet _snippet;
+        private SnippetWrapper _snippet;
 
         public SnippetDetailViewModel(ISnippetManagerDataService snippetManagerDataService,
             IEventAggregator eventAggregator)
@@ -29,7 +30,7 @@ namespace CodeSnippetManager.UI.ViewModels
             this.SaveCommand = new DelegateCommand(OnSaveExecute, OnSaveCanExecute);
         }
 
-        public Snippet Snippet
+        public SnippetWrapper Snippet
         {
             get => _snippet;
             set => SetProperty(ref _snippet, value);
@@ -39,12 +40,12 @@ namespace CodeSnippetManager.UI.ViewModels
 
         private async void OnSaveExecute()
         {
-            await _snippetManagerDataService.SaveAsync(this.Snippet);
+            await _snippetManagerDataService.SaveAsync(this.Snippet.Model);
             _eventAggregator.GetEvent<AfterSnippetSavedEvent>().Publish(
                 new AfterSnippetSavedEventArgs
                 {
                     Id = Snippet.Id,
-                    DisplayMember = $"{Snippet.Language.Name}: {Snippet.Description}"
+                    DisplayMember = Snippet.Description
                 });
         }
 
@@ -61,7 +62,9 @@ namespace CodeSnippetManager.UI.ViewModels
 
         public async Task LoadAsync(int snippetId)
         {
-            this.Snippet = await _snippetManagerDataService.GetByIdAsync(snippetId);
+            var snippet = await _snippetManagerDataService.GetByIdAsync(snippetId);
+
+            this.Snippet = new SnippetWrapper(snippet);
         }
 
         

@@ -27,7 +27,7 @@ namespace CodeSnippetManager.UI.Data
                 .Select(s => new LookupItem
                 {
                     Id = s.Id,
-                    DisplayMember = s.Language.Name + ": " + s.Description
+                    DisplayMember = s.Description
                 })
                 .ToListAsync();
         }

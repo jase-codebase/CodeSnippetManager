@@ -25,7 +25,7 @@ namespace CodeSnippetManager.DataAccess.Entities
         public virtual int LanguageId { get; set; }
         public virtual Language Language { get; set; }
 
-        public ObservableCollection<Tag> Tags { get; set; }
+        public virtual ICollection<Tag> Tags { get; set; }
 
         public override bool Equals(object obj)
         {
