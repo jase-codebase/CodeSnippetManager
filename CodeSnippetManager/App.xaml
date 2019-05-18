@@ -18,7 +18,7 @@
                 <Setter Property="Margin" Value="10 10 10 0"/>
             </Style.Setters>
         </Style>
-        <Style TargetType="TextBox">
+        <Style TargetType="TextBox" x:Key="validatedTextBox">
             <Setter Property="Validation.ErrorTemplate">
                 <Setter.Value>
                     <ControlTemplate>
@@ -38,7 +38,8 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <Style x:Key="styleCode" TargetType="TextBox">
+        <Style TargetType="TextBox" BasedOn="{StaticResource validatedTextBox}"/>
+        <Style TargetType="TextBox" BasedOn="{StaticResource validatedTextBox}" x:Key="styleCode">
             <Style.Setters>
                 <Setter Property="FontFamily" Value="Consolas"/>
                 <Setter Property="FontSize" Value="11"/>
