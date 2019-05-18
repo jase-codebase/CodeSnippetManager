@@ -6,14 +6,7 @@
              xmlns:local="clr-namespace:CodeSnippetManager.UI.View"
              mc:Ignorable="d" 
              d:DesignHeight="350" d:DesignWidth="500">
-    <UserControl.Resources>
-        <Style x:Key="styleLabels" TargetType="Label">
-            <Style.Setters>
-                <Setter Property="FontFamily" Value="Segoe Marker"/>
-                <Setter Property="FontSize" Value="14"/>
-            </Style.Setters>
-        </Style>
-    </UserControl.Resources>
+
     <Grid>
         <Border Style="{StaticResource styleBorderViolet}">
             <Grid>
@@ -29,14 +22,15 @@
                     <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <Label Grid.Row="0" Content="Language" Margin="10 10 10 0" Style="{StaticResource styleLabels}"/>
-                <TextBox Grid.Row="1" Text="{Binding Snippet.Language.Name}" Margin="10 0 10 10" />
+                <Label Grid.Row="0" Content="Language" Style="{StaticResource topLabel}"/>
+                <TextBox Grid.Row="1" Text="{Binding Snippet.Language.Name, Mode=OneWay}" Margin="10 0 10 10" />
 
-                <Label Grid.Row="2" Content="Description" Margin="10 0" Style="{StaticResource styleLabels}"/>
-                <TextBox Grid.Row="3" Text="{Binding Snippet.Description}" Margin="10 0 10 10" />
+                <Label Grid.Row="2" Content="Description"/>
+                <TextBox Grid.Row="3" Text="{Binding Snippet.Description, Mode=TwoWay, 
+                    UpdateSourceTrigger=PropertyChanged}" Margin="10 0 10 10" />
 
-                <Label Grid.Row="4" Content="Tags" Margin="10 0" Style="{StaticResource styleLabels}"/>
-                <ListBox Grid.Row="5" Margin="10 0 10 0" ItemsSource="{Binding Snippet.Tags}" BorderThickness="0">
+                <Label Grid.Row="4" Content="Tags"/>
+                <ListBox Grid.Row="5" Margin="10 0 10 0" Height="25" ItemsSource="{Binding Snippet.Tags}" BorderThickness="0">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Horizontal">
@@ -50,10 +44,10 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-                
-                <Label Grid.Row="6" Content="Snippet Code" Margin="10 0" Style="{StaticResource styleLabels}" />
-                <TextBox Grid.Row="7" Text="{Binding Snippet.Text}" Margin="10 0 10 10" 
-                     Style="{StaticResource styleCode}"/>
+
+                <Label Grid.Row="6" Content="Snippet Code" />
+                <TextBox Grid.Row="7" Text="{Binding Snippet.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                         Style="{StaticResource styleCode}"/>
 
                 <StackPanel Grid.Row="8" Orientation="Horizontal">
                     <Button Content="_Save" Width="85" Padding="5,3,5,3" Margin="10"
@@ -61,6 +55,6 @@
                 </StackPanel>
             </Grid>
         </Border>
-        
+
     </Grid>
 </UserControl>

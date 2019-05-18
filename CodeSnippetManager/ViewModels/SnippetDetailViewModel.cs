@@ -52,7 +52,7 @@ namespace CodeSnippetManager.UI.ViewModels
         private bool OnSaveCanExecute()
         {
             // TODO: Check if snippet is valid
-            return true;
+            return this.Snippet != null && !this.Snippet.HasErrors;
         }
 
         private async void OnOpenCodeSnippetDetailView(int snippetId)
@@ -65,8 +65,16 @@ namespace CodeSnippetManager.UI.ViewModels
             var snippet = await _snippetManagerDataService.GetByIdAsync(snippetId);
 
             this.Snippet = new SnippetWrapper(snippet);
+            this.Snippet.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == nameof(this.Snippet.HasErrors))
+                {
+                    ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+                }
+            };
+            ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
         }
 
-        
+
     }
 }

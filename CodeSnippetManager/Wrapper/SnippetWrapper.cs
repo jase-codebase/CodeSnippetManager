@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CodeSnippetManager.UI.Wrapper
 {
-    public class SnippetWrapper : ViewModelBase, INotifyDataErrorInfo
+    public class SnippetWrapper : NotifyDataErrorInfoBase
     {
         public SnippetWrapper(Snippet model)
         {
@@ -77,48 +77,12 @@ namespace CodeSnippetManager.UI.Wrapper
                         this.AddError(propertyName, "The snippet description cannot be blank.");
                     }
                     break;
-            }
-        }
-
-        private Dictionary<string, List<string>> _errorsByPropertyName =
-            new Dictionary<string, List<string>>();
-
-        public bool HasErrors => _errorsByPropertyName.Any();
-
-        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
-
-        public IEnumerable GetErrors(string propertyName)
-        {
-            return _errorsByPropertyName.ContainsKey(propertyName)
-                ? _errorsByPropertyName[propertyName]
-                : null;
-        }
-
-        private void OnErrorsChanged(string propertyName)
-        {
-            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
-        }
-
-        private void AddError(string propertyName, string error)
-        {
-            if (!_errorsByPropertyName.ContainsKey(propertyName))
-            {
-                _errorsByPropertyName[propertyName] = new List<string>();
-            }
-
-            if (!_errorsByPropertyName[propertyName].Contains(error))
-            {
-                _errorsByPropertyName[propertyName].Add(error);
-                OnErrorsChanged(propertyName);
-            }
-        }
-
-        private void ClearErrors(string propertyName)
-        {
-            if (_errorsByPropertyName.ContainsKey(propertyName))
-            {
-                _errorsByPropertyName.Remove(propertyName);
-                OnErrorsChanged(propertyName);
+                case nameof(this.Text):
+                    if (string.IsNullOrWhiteSpace(this.Text))
+                    {
+                        this.AddError(propertyName, "The snippet code text cannot be blank.");
+                    }
+                    break;
             }
         }
     }
