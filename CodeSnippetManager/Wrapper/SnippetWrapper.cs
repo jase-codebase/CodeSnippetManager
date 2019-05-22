@@ -1,4 +1,4 @@
-﻿using CodeSnippetManager.DataAccess.Entities;
+﻿using CodeSnippetManager.Model;
 using CodeSnippetManager.UI.ViewModels;
 using System;
 using System.Collections;
@@ -11,76 +11,50 @@ using System.Threading.Tasks;
 
 namespace CodeSnippetManager.UI.Wrapper
 {
-    public class SnippetWrapper : NotifyDataErrorInfoBase
+    public class SnippetWrapper : ModelWrapper<Snippet>
     {
-        public SnippetWrapper(Snippet model)
-        {
-            Model = model;
-        }
-
-        public Snippet Model { get; }
+        public SnippetWrapper(Snippet model) : base(model) { }
 
         public int Id { get { return this.Model.Id; } }
 
         public Language Language
         {
-            get => this.Model.Language;
-            set
-            {
-                this.Model.Language = value;
-                OnPropertyChanged();
-                ValidateProperty(nameof(Language));
-            }
+            get => GetValue<Language>();
+            set => SetValue(value);
         }
 
         public string Description
         {
-            get => this.Model.Description;
-            set
-            {
-                this.Model.Description = value;
-                OnPropertyChanged();
-                ValidateProperty(nameof(Description));
-            }
+            get => GetValue<string>();
+            set => SetValue(value);
         }
 
         public string Text
         {
-            get => this.Model.Text;
-            set
-            {
-                this.Model.Text = value;
-                OnPropertyChanged();
-                ValidateProperty(nameof(Text));
-            }
+            get => GetValue<string>();
+            set => SetValue(value);
         }
 
         public ICollection<Tag> Tags
         {
-            get => this.Model.Tags;
-            set
-            {
-                this.Model.Tags = value;
-                OnPropertyChanged();
-                ValidateProperty(nameof(Tags));
-            }
+            get => GetValue<ICollection<Tag>>();
+            set => SetValue(value);
         }
 
-        private void ValidateProperty(string propertyName)
+        protected override IEnumerable<string> ValidateProperty(string propertyName)
         {
-            this.ClearErrors(propertyName);
             switch (propertyName)
             {
                 case nameof(this.Description):
                     if (String.IsNullOrWhiteSpace(this.Description))
                     {
-                        this.AddError(propertyName, "The snippet description cannot be blank.");
+                        yield return "The snippet description cannot be blank.";
                     }
                     break;
                 case nameof(this.Text):
                     if (string.IsNullOrWhiteSpace(this.Text))
                     {
-                        this.AddError(propertyName, "The snippet code text cannot be blank.");
+                        yield return "The snippet code text cannot be blank.";
                     }
                     break;
             }

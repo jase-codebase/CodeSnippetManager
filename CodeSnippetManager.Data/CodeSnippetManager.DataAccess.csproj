@@ -49,9 +49,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CodeSnippetManagerContext.cs" />
-    <Compile Include="Entities\Language.cs" />
-    <Compile Include="Entities\Snippet.cs" />
-    <Compile Include="Entities\Tag.cs" />
     <Compile Include="Migrations\201903230255051_InitialCreate.cs" />
     <Compile Include="Migrations\201903230255051_InitialCreate.Designer.cs">
       <DependentUpon>201903230255051_InitialCreate.cs</DependentUpon>
@@ -74,6 +71,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CodeSnippetManager.Model\CodeSnippetManager.Model.csproj">
+      <Project>{1EC679E2-7668-4F54-9AE1-E43A9E6BBEA0}</Project>
+      <Name>CodeSnippetManager.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

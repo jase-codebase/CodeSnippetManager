@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CodeSnippetManager.DataAccess.Entities
+namespace CodeSnippetManager.Model
 {
     public class Language
     {
@@ -16,6 +16,7 @@ namespace CodeSnippetManager.DataAccess.Entities
         public int Id { get; set; }
 
         [Required]
+        [StringLength(50, ErrorMessage = "The language name cannot be more than 50 characters long")]
         public virtual string Name { get; set; }
 
         public virtual string Description { get; set; }

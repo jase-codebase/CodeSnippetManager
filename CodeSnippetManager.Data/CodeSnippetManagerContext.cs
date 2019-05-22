@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data.Entity;
-using CodeSnippetManager.DataAccess.Entities;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using CodeSnippetManager.Model;
 
 namespace CodeSnippetManager.DataAccess
 {

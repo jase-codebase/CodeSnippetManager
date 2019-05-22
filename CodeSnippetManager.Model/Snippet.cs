@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CodeSnippetManager.DataAccess.Entities
+namespace CodeSnippetManager.Model
 {
     public class Snippet
     {

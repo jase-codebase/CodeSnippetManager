@@ -1,4 +1,4 @@
-﻿using CodeSnippetManager.DataAccess.Entities;
+﻿using CodeSnippetManager.Model;
 using CodeSnippetManager.UI.Data;
 using CodeSnippetManager.UI.Event;
 using CodeSnippetManager.UI.Wrapper;
@@ -62,7 +62,7 @@ namespace CodeSnippetManager.UI.ViewModels
 
         public async Task LoadAsync(int snippetId)
         {
-            var snippet = await _snippetManagerDataService.GetByIdAsync(snippetId);
+            Snippet snippet = await _snippetManagerDataService.GetByIdAsync(snippetId);
 
             this.Snippet = new SnippetWrapper(snippet);
             this.Snippet.PropertyChanged += (s, e) =>

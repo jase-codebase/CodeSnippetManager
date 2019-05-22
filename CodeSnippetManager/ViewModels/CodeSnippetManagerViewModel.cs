@@ -1,5 +1,4 @@
-﻿using CodeSnippetManager.DataAccess.Entities;
-using CodeSnippetManager.UI.Data;
+﻿using CodeSnippetManager.UI.Data;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

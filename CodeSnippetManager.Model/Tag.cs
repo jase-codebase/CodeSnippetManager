@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace CodeSnippetManager.DataAccess.Entities
+namespace CodeSnippetManager.Model
 {
     public class Tag
     {
