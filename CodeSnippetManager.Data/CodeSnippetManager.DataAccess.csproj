@@ -57,6 +57,10 @@
     <Compile Include="Migrations\201905150159134_RequireSnippetDescription.Designer.cs">
       <DependentUpon>201905150159134_RequireSnippetDescription.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905230224268_RequireLanguageDescription.cs" />
+    <Compile Include="Migrations\201905230224268_RequireLanguageDescription.Designer.cs">
+      <DependentUpon>201905230224268_RequireLanguageDescription.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Seeder.cs" />
@@ -67,6 +71,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905150159134_RequireSnippetDescription.resx">
       <DependentUpon>201905150159134_RequireSnippetDescription.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905230224268_RequireLanguageDescription.resx">
+      <DependentUpon>201905230224268_RequireLanguageDescription.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

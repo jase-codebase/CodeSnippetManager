@@ -46,15 +46,15 @@ namespace CodeSnippetManager.UI.Wrapper
             switch (propertyName)
             {
                 case nameof(this.Description):
-                    if (String.IsNullOrWhiteSpace(this.Description))
+                    if (this.Description.Equals("N/A", StringComparison.OrdinalIgnoreCase))
                     {
-                        yield return "The snippet description cannot be blank.";
+                        yield return "The snippet description cannot be 'N/A'";
                     }
                     break;
                 case nameof(this.Text):
-                    if (string.IsNullOrWhiteSpace(this.Text))
+                    if (this.Text.Equals("N/A", StringComparison.OrdinalIgnoreCase))
                     {
-                        yield return "The snippet code text cannot be blank.";
+                        yield return "The snippet code text cannot be 'N/A'";
                     }
                     break;
             }

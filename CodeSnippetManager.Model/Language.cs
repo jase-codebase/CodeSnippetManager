@@ -19,6 +19,7 @@ namespace CodeSnippetManager.Model
         [StringLength(50, ErrorMessage = "The language name cannot be more than 50 characters long")]
         public virtual string Name { get; set; }
 
+        [Required]
         public virtual string Description { get; set; }
 
         [InverseProperty("Language")]

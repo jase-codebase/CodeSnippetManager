@@ -51,7 +51,7 @@ namespace CodeSnippetManager.UI.ViewModels
 
         private bool OnSaveCanExecute()
         {
-            // TODO: Check if snippet is valid
+            // TODO: Check in addition if snippet has changes
             return this.Snippet != null && !this.Snippet.HasErrors;
         }
 

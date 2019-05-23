@@ -69,10 +69,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Data\ICodeSnippetLookupDataService.cs" />
-    <Compile Include="Data\ISnippetManagerDataService.cs" />
-    <Compile Include="Data\LookupDataService.cs" />
-    <Compile Include="Data\SnippetManagerDataService.cs" />
+    <Compile Include="Data\Lookups\ICodeSnippetLookupDataService.cs" />
+    <Compile Include="Data\Repositories\ISnippetManagerDataService.cs" />
+    <Compile Include="Data\Lookups\LookupDataService.cs" />
+    <Compile Include="Data\Repositories\SnippetManagerDataService.cs" />
     <Compile Include="Event\AfterSnippetSavedEvent.cs" />
     <Compile Include="Event\OpenCodeSnippetDetailViewEvent.cs" />
     <Compile Include="Startup\Bootstrapper.cs" />

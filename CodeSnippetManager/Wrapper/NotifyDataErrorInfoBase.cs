@@ -28,6 +28,7 @@ namespace CodeSnippetManager.UI.Wrapper
         protected virtual void OnErrorsChanged(string propertyName)
         {
             ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+            base.OnPropertyChanged(nameof(this.HasErrors));
         }
 
         protected void AddError(string propertyName, string error)

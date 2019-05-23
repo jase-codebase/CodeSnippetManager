@@ -33,13 +33,25 @@ namespace CodeSnippetManager.UI.Wrapper
         {
             ClearErrors(propertyName);
 
-            // 1. Validate Data Annotations
+            ValidateDataAnnotations(propertyName, currentValue);
+
+            this.ValidateCustomErrors(propertyName);
+        }
+
+        private void ValidateDataAnnotations(string propertyName, object currentValue)
+        {
             List<ValidationResult> results = new List<ValidationResult>();
             ValidationContext context = new ValidationContext(Model) { MemberName = propertyName };
             Validator.TryValidateProperty(currentValue, context, results);
 
-            // 2. Validate Custom Errors
+            foreach (ValidationResult result in results)
+            {
+                AddError(propertyName, result.ErrorMessage);
+            }
+        }
 
+        private void ValidateCustomErrors(string propertyName)
+        {
             IEnumerable<string> errors = ValidateProperty(propertyName);
             if (errors != null)
             {
