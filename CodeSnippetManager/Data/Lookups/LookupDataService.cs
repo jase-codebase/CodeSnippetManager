@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CodeSnippetManager.UI.Data
+namespace CodeSnippetManager.UI.Data.Lookups
 {
     public class LookupDataService : ICodeSnippetLookupDataService
     {

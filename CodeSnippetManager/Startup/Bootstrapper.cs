@@ -1,7 +1,10 @@
 ﻿using Autofac;
 using CodeSnippetManager.DataAccess;
 using CodeSnippetManager.UI.Data;
+using CodeSnippetManager.UI.Data.Lookups;
+using CodeSnippetManager.UI.Data.Repositories;
 using CodeSnippetManager.UI.ViewModels;
+using CodeSnippetManager.UI.ViewModels.Services;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
@@ -21,13 +24,15 @@ namespace CodeSnippetManager.UI.Startup
 
             builder.RegisterType<CodeSnippetManagerContext>().AsSelf();
 
+            builder.RegisterType<MessageDialogService>().As<IMessageDialogService>();
+
             builder.RegisterType<CodeSnippetManagerWindow>().AsSelf();
             builder.RegisterType<CodeSnippetManagerViewModel>().AsSelf();
             builder.RegisterType<NavigationViewModel>().As<INavigationViewModel>();
             builder.RegisterType<SnippetDetailViewModel>().As<ISnippetDetailViewModel>();
 
             builder.RegisterType<LookupDataService>().AsImplementedInterfaces();
-            builder.RegisterType<SnippetManagerDataService>().As<ISnippetManagerDataService>();
+            builder.RegisterType<SnippetManagerRepository>().As<ISnippetManagerRepository>();
 
             return builder.Build();
         }

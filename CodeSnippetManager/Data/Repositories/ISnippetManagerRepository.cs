@@ -3,11 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace CodeSnippetManager.UI.Data
+namespace CodeSnippetManager.UI.Data.Repositories
 {
-    public interface ISnippetManagerDataService : IDisposable
+    public interface ISnippetManagerRepository : IDisposable
     {
         Task<Snippet> GetByIdAsync(int snippetId);
-        Task SaveAsync(Snippet snippet);
+        Task SaveAsync();
+        bool HasChanges();
     }
 }

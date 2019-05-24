@@ -8,34 +8,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CodeSnippetManager.UI.Data
+namespace CodeSnippetManager.UI.Data.Repositories
 {
-    public class SnippetManagerDataService : ISnippetManagerDataService
+    public class SnippetManagerRepository : ISnippetManagerRepository
     {
         private CodeSnippetManagerContext _context;
-        private Func<CodeSnippetManagerContext> _contextCreator;
 
-        public SnippetManagerDataService(Func<CodeSnippetManagerContext> contextCreator)
+        public SnippetManagerRepository(CodeSnippetManagerContext context)
         {
-            _contextCreator = contextCreator;
+            _context = context;
         }
 
         public async Task<Snippet> GetByIdAsync(int snippetId)
         {
-            _context = _contextCreator();
-            Snippet snippet = await _context.CodeSnippets.AsNoTracking().SingleAsync(s => s.Id == snippetId);
-            return snippet;
+            return await _context.CodeSnippets.SingleAsync(s => s.Id == snippetId);
         }
 
-        public async Task SaveAsync(Snippet snippet)
+        public async Task SaveAsync()
         {
-            using (CodeSnippetManagerContext ctx = _contextCreator())
-            {
-                ctx.CodeSnippets.Attach(snippet);
-                ctx.Entry(snippet).State = EntityState.Modified;
-                await ctx.SaveChangesAsync();
-            }
+            await _context.SaveChangesAsync();
         }
+
+        public void Dispose()
+        {
+            this._context?.Dispose();
+        }
+
+        public bool HasChanges()
+        {
+            return _context.ChangeTracker.HasChanges();
+        }
+
 
         private static IEnumerable<Snippet> GetHardcoded()
         {
@@ -105,12 +108,5 @@ namespace CodeSnippetManager.UI.Data
                 Description = "Gets the length of the specified string."
             };
         }
-
-        public void Dispose()
-        {
-            this._context?.Dispose();
-        }
-
-        
     }
 }

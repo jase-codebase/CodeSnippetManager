@@ -1,13 +1,9 @@
 ﻿using CodeSnippetManager.Model;
-using CodeSnippetManager.UI.Data;
+using CodeSnippetManager.UI.Data.Repositories;
 using CodeSnippetManager.UI.Event;
 using CodeSnippetManager.UI.Wrapper;
 using Prism.Commands;
 using Prism.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -15,17 +11,16 @@ namespace CodeSnippetManager.UI.ViewModels
 {
     public class SnippetDetailViewModel : ViewModelBase, ISnippetDetailViewModel
     {
-        private readonly ISnippetManagerDataService _snippetManagerDataService;
+        private readonly ISnippetManagerRepository _snippetManagerRepository;
         private readonly IEventAggregator _eventAggregator;
         private SnippetWrapper _snippet;
+        private bool _hasChanges;
 
-        public SnippetDetailViewModel(ISnippetManagerDataService snippetManagerDataService,
+        public SnippetDetailViewModel(ISnippetManagerRepository snippetManagerRepository,
             IEventAggregator eventAggregator)
         {
-            _snippetManagerDataService = snippetManagerDataService;
+            _snippetManagerRepository = snippetManagerRepository;
             _eventAggregator = eventAggregator;
-            _eventAggregator.GetEvent<OpenCodeSnippetDetailViewEvent>()
-                .Subscribe(OnOpenCodeSnippetDetailView);
 
             this.SaveCommand = new DelegateCommand(OnSaveExecute, OnSaveCanExecute);
         }
@@ -36,11 +31,25 @@ namespace CodeSnippetManager.UI.ViewModels
             set => SetProperty(ref _snippet, value);
         }
 
+        public bool HasChanges
+        {
+            get { return _hasChanges; }
+            set
+            {
+                if (SetProperty(ref _hasChanges, value))
+                {
+                    ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+                }
+            }
+        }
+
+
         public ICommand SaveCommand { get; }
 
         private async void OnSaveExecute()
         {
-            await _snippetManagerDataService.SaveAsync(this.Snippet.Model);
+            await _snippetManagerRepository.SaveAsync();
+            this.HasChanges = _snippetManagerRepository.HasChanges();
             _eventAggregator.GetEvent<AfterSnippetSavedEvent>().Publish(
                 new AfterSnippetSavedEventArgs
                 {
@@ -51,22 +60,22 @@ namespace CodeSnippetManager.UI.ViewModels
 
         private bool OnSaveCanExecute()
         {
-            // TODO: Check in addition if snippet has changes
-            return this.Snippet != null && !this.Snippet.HasErrors;
-        }
-
-        private async void OnOpenCodeSnippetDetailView(int snippetId)
-        {
-            await this.LoadAsync(snippetId);
+            return this.Snippet != null
+                && !this.Snippet.HasErrors
+                && this.HasChanges;
         }
 
         public async Task LoadAsync(int snippetId)
         {
-            Snippet snippet = await _snippetManagerDataService.GetByIdAsync(snippetId);
+            Snippet snippet = await _snippetManagerRepository.GetByIdAsync(snippetId);
 
             this.Snippet = new SnippetWrapper(snippet);
             this.Snippet.PropertyChanged += (s, e) =>
             {
+                if (!this.HasChanges)
+                {
+                    this.HasChanges = _snippetManagerRepository.HasChanges();
+                }
                 if (e.PropertyName == nameof(this.Snippet.HasErrors))
                 {
                     ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
@@ -74,7 +83,5 @@ namespace CodeSnippetManager.UI.ViewModels
             };
             ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
         }
-
-
     }
 }

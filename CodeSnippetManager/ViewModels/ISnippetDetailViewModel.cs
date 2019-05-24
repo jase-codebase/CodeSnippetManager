@@ -5,5 +5,6 @@ namespace CodeSnippetManager.UI.ViewModels
     public interface ISnippetDetailViewModel
     {
         Task LoadAsync(int snippetId);
+        bool HasChanges { get; }
     }
 }

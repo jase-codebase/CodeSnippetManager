@@ -70,9 +70,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Data\Lookups\ICodeSnippetLookupDataService.cs" />
-    <Compile Include="Data\Repositories\ISnippetManagerDataService.cs" />
     <Compile Include="Data\Lookups\LookupDataService.cs" />
-    <Compile Include="Data\Repositories\SnippetManagerDataService.cs" />
+    <Compile Include="Data\Repositories\ISnippetManagerRepository.cs" />
+    <Compile Include="Data\Repositories\SnippetManagerRepository.cs" />
     <Compile Include="Event\AfterSnippetSavedEvent.cs" />
     <Compile Include="Event\OpenCodeSnippetDetailViewEvent.cs" />
     <Compile Include="Startup\Bootstrapper.cs" />
@@ -81,6 +81,8 @@
     <Compile Include="ViewModels\ISnippetDetailViewModel.cs" />
     <Compile Include="ViewModels\NavigationItemViewModel.cs" />
     <Compile Include="ViewModels\NavigationViewModel.cs" />
+    <Compile Include="ViewModels\Services\IMessageDialogService.cs" />
+    <Compile Include="ViewModels\Services\MessageDialogService.cs" />
     <Compile Include="ViewModels\SnippetDetailViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="View\NavigationView.xaml.cs">
