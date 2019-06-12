@@ -26,7 +26,7 @@
                 <TextBox Grid.Row="1" Text="{Binding Snippet.Language.Name, Mode=OneWay}" Margin="10 0 10 10" />
 
                 <Label Grid.Row="2" Content="Description"/>
-                <TextBox Grid.Row="3" Text="{Binding Snippet.Description, Mode=TwoWay, 
+                <TextBox x:Name="txtDescription" Grid.Row="3" Text="{Binding Snippet.Description, Mode=TwoWay, 
                     UpdateSourceTrigger=PropertyChanged}" Margin="10 0 10 10" />
 
                 <Label Grid.Row="4" Content="Tags"/>
